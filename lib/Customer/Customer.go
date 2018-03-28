@@ -1,4 +1,4 @@
-package nehgo
+package Customer
 
 type Customer struct {
 	Customer_id int
