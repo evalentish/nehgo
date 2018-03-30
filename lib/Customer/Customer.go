@@ -12,7 +12,7 @@ type Customer struct {
 }
 
 func (customer *Customer) GetCustomer(customer_id int, connector Connector.Connector) {
-	connector.Put("", "")
+	connector.Get("", "")
 	customer.Customer_id = customer_id
 	customer.Name = "Nisse Hult"
 	customer.Address = "Testvägen 1"
