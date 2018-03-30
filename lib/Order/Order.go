@@ -21,7 +21,7 @@ func (orders *Orders) Parse(data string) {
 
 }
 
-func GetOrder(order_id int, connector Connector.Connector) *Order {
+func GetOrder(order_id int, connector *Connector.Connector) *Order {
 	var order = new(Order)
 
 	result := connector.Get("", "")
@@ -30,7 +30,7 @@ func GetOrder(order_id int, connector Connector.Connector) *Order {
 	return order
 }
 
-func GetOrders(connector Connector.Connector) *Orders {
+func GetOrders(connector *Connector.Connector) *Orders {
 	var orders = new(Orders)
 
 	result := connector.Get("", "")
