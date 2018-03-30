@@ -6,16 +6,20 @@ type Connector struct {
 	hostname string
 }
 
-func (connector *Connector) Get(address string, payload string) {
-
+func (connector *Connector) Get(address string, payload string) string {
+	return ""
 }
 
-func (connector *Connector) Put(address string, payload string) {
-
+func (connector *Connector) Put(address string, payload string) string {
+	return ""
 }
 
-func (connector *Connector) Post(address string, payload string) {
+func (connector *Connector) Post(address string, payload string) string {
+	return ""
+}
 
+func (connector *Connector) Delete(address string, payload string) string {
+	return ""
 }
 
 func NewConnector(username string, password string, hostname string) *Connector {
