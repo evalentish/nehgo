@@ -10,7 +10,7 @@ type Order struct {
 }
 
 func (order *Order) Parse(data string) {
-
+	order.Order_id = 123
 }
 
 type Orders struct {
