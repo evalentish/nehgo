@@ -1,6 +1,10 @@
 package nehgo
 
 import (
-	"nehgo/lib/Customer"
+	"fmt"
 )
+
+func init() {
+	fmt.Print("Test")
+}
 
