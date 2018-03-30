@@ -9,21 +9,32 @@ type Order struct {
 	Order_id int
 }
 
+func (order *Order) Parse(data string) {
+
+}
+
 type Orders struct {
 	List types.Array
 }
 
+func (orders *Orders) Parse(data string) {
+
+}
+
 func GetOrder(order_id int, connector Connector.Connector) *Order {
-	connector.Get("", "")
 	var order = new(Order)
-	order.Order_id = order_id
+
+	result := connector.Get("", "")
+	order.Parse(result);
+
 	return order
 }
 
 func GetOrders(connector Connector.Connector) *Orders {
 	var orders = new(Orders)
 
-	connector.Get("", "")
+	result := connector.Get("", "")
+	orders.Parse(result)
 
 	return orders
 }
