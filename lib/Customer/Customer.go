@@ -1,7 +1,7 @@
 package Customer
 
 import (
-	Connector "nehgo/lib/Connector"
+	Connector "github.com/evalentish/nehgo/lib/Connector"
 )
 
 type Customer struct {
