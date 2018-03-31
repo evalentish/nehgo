@@ -1,9 +1,5 @@
 package Customer
 
-import (
-	Connector "github.com/evalentish/nehgo/lib/Connector"
-)
-
 type Customer struct {
 	Customer_id int
 	Name string
@@ -11,17 +7,18 @@ type Customer struct {
 	Customer_no string
 }
 
-func (customer *Customer) GetCustomer(customer_id int, connector Connector.Connector) {
-	connector.Get("", "")
-	customer.Customer_id = customer_id
-	customer.Name = "Nisse Hult"
-	customer.Address = "Testvägen 1"
+func (customer *Customer) Parse(data string) bool {
+	return true
 }
 
-func (customer *Customer) PutCustomer() {
-	// Send this object to the server
+func (customer *Customer) AsXML() string {
+	var xml string
+	xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
+	return xml
 }
 
-func (customer *Customer) PostCustomer() {
-	// Send this object to the server
+func NewCustomer() *Customer {
+	var customer *Customer
+	customer = new(Customer)
+	return customer
 }
