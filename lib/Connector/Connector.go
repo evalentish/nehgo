@@ -21,7 +21,7 @@ func (connector *Connector) Get(address string, payload string) string {
 	client := &http.Client{}
 	request, err := http.NewRequest("PUT", url, strings.NewReader(payload))
 	request.SetBasicAuth(connector.username, connector.password)
-	request.ContentLength = int64(len(payload))
+	//request.ContentLength = int64(len(payload))
 	response, err := client.Do(request)
 	if err != nil {
 		log.Fatal(err)
