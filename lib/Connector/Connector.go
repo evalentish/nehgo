@@ -19,10 +19,8 @@ func (connector *Connector) Get(address string, payload string) string {
 	var url string
 	url = "https://" + connector.hostname + "/__API__" + address
 	client := &http.Client{}
-	request, err := http.NewRequest("PUT", url, strings.NewReader(payload))
+	request, err := http.NewRequest("GET", url, strings.NewReader(payload))
 	request.SetBasicAuth(connector.username, connector.password)
-	request.ContentLength = int64(len(payload))
-	fmt.Printf("Length %d", request.ContentLength)
 	response, err := client.Do(request)
 	if err != nil {
 		log.Fatal(err)
