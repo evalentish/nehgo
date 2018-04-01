@@ -2,8 +2,8 @@ package nehgo
 
 import (
 	"fmt"
-	"nehgo/lib/Order"
-	"nehgo/lib/Connector"
+	"github.com/evalentish/nehgo/lib/Order"
+	"github.com/evalentish/nehgo/lib/Connector"
 )
 
 func init() {
