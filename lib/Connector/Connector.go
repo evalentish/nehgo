@@ -37,7 +37,7 @@ func (connector *Connector) Get(address string, payload string) string {
 		for key, value := range hdr {
 			fmt.Println("   ", key, ":", value)
 		}
-		fmt.Println(contents)
+		fmt.Println(string(contents))
 	}
 	return ""
 }
