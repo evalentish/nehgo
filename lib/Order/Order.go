@@ -9,6 +9,7 @@ import (
 type Order struct {
 	XMLName xml.Name `xml:"Order"`
 	Order_id int `xml:"order_id,attr"`
+	OrderHREF string `xml:"href,attr"`
 	OrderNo int `xml:"OrderNo"`
 	CustomerNo int `xml:"Customer"`
 }
