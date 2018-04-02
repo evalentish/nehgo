@@ -6,7 +6,7 @@ import (
 )
 
 type Order struct {
-	Order_id int
+	Order_id int `xml:"order_id,attr"`
 }
 
 func (order *Order) Parse(data string) {
