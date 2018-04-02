@@ -1,13 +1,16 @@
 package Order
 
-import "go/types"
+import (
+	"go/types"
+	"encoding/xml"
+)
 
 type Order struct {
 	Order_id int
 }
 
 func (order *Order) Parse(data string) {
-	order.Order_id = 123
+	xml.Unmarshal([]byte(data), order)
 }
 
 func NewOrder(payload ...string) *Order {
