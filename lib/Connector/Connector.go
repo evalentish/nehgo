@@ -18,15 +18,15 @@ type Connector struct {
 }
 
 type ConnectorResponse struct {
-	statusCode int
-	headers map[string] string
-	content string
+	StatusCode int
+	Headers map[string]string
+	Content string
 }
 
 func (connector *Connector) Get(address string) *ConnectorResponse {
 	var url string
 	var result = new(ConnectorResponse)
-	result.headers = make(map[string]string)
+	result.Headers = make(map[string]string)
 	url = "https://" + connector.hostname + "/__API__" + address
 	client := &http.Client{}
 	request, err := http.NewRequest("GET", url, nil)
@@ -43,10 +43,10 @@ func (connector *Connector) Get(address string) *ConnectorResponse {
 		hdr := response.Header
 		var key, value string
 		for key, value = range hdr {
-			result.headers[key] = value
+			result.Headers[key] = value
 		}
-		result.statusCode = response.StatusCode
-		result.content = string(contents)
+		result.StatusCode = response.StatusCode
+		result.Content = string(contents)
 	}
 	return nil
 }
@@ -71,10 +71,10 @@ func (connector *Connector) Put(address string, payload string) *ConnectorRespon
 		hdr := response.Header
 		var key, value string
 		for key, value = range hdr {
-			result.headers[key] = value
+			result.Headers[key] = value
 		}
-		result.statusCode = response.StatusCode
-		result.content = string(contents)
+		result.StatusCode = response.StatusCode
+		result.Content = string(contents)
 		return result
 	}
 	return nil
