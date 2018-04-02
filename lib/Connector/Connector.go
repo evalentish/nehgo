@@ -45,6 +45,7 @@ func (connector *Connector) Get(address string) *ConnectorResponse {
 		}
 		result.StatusCode = response.StatusCode
 		result.Content = string(contents)
+		return result
 	}
 	return nil
 }

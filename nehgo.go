@@ -6,10 +6,6 @@ import (
 	"github.com/evalentish/nehgo/lib/Connector"
 )
 
-func init() {
-	fmt.Print("Test")
-}
-
 func GetOrder(connector *Connector.Connector, order_id int) *Order.Order {
 	var apiResult *Connector.ConnectorResponse
 	var order *Order.Order
