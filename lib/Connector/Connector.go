@@ -5,9 +5,6 @@ import (
 	"strings"
 	"log"
 	"io/ioutil"
-	"fmt"
-	"expvar"
-	"go/types"
 )
 
 type Connector struct {
