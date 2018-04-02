@@ -6,6 +6,8 @@ import (
 	"log"
 	"io/ioutil"
 	"fmt"
+	"expvar"
+	"go/types"
 )
 
 type Connector struct {
@@ -15,11 +17,19 @@ type Connector struct {
 	basepath string
 }
 
-func (connector *Connector) Get(address string, payload string) string {
+type ConnectorResponse struct {
+	statusCode int
+	headers map[string] string
+	content string
+}
+
+func (connector *Connector) Get(address string) *ConnectorResponse {
 	var url string
+	var result = new(ConnectorResponse)
+	result.headers = make(map[string]string)
 	url = "https://" + connector.hostname + "/__API__" + address
 	client := &http.Client{}
-	request, err := http.NewRequest("GET", url, strings.NewReader(payload))
+	request, err := http.NewRequest("GET", url, nil)
 	request.SetBasicAuth(connector.username, connector.password)
 	response, err := client.Do(request)
 	if err != nil {
@@ -30,19 +40,20 @@ func (connector *Connector) Get(address string, payload string) string {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("The calculated length is:", len(string(contents)), "for the url:", url)
-		fmt.Println("   ", response.StatusCode)
 		hdr := response.Header
-		for key, value := range hdr {
-			fmt.Println("   ", key, ":", value)
+		var key, value string
+		for key, value = range hdr {
+			result.headers[key] = value
 		}
-		fmt.Println(string(contents))
+		result.statusCode = response.StatusCode
+		result.content = string(contents)
 	}
-	return ""
+	return nil
 }
 
-func (connector *Connector) Put(address string, payload string) string {
+func (connector *Connector) Put(address string, payload string) *ConnectorResponse {
 	var url string
+	var result = new(ConnectorResponse)
 	url = "https://" + connector.hostname + address
 	client := &http.Client{}
 	request, err := http.NewRequest("PUT", url, strings.NewReader(payload))
@@ -57,15 +68,16 @@ func (connector *Connector) Put(address string, payload string) string {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("The calculated length is:", len(string(contents)), "for the url:", url)
-		fmt.Println("   ", response.StatusCode)
 		hdr := response.Header
-		for key, value := range hdr {
-			fmt.Println("   ", key, ":", value)
+		var key, value string
+		for key, value = range hdr {
+			result.headers[key] = value
 		}
-		fmt.Println(contents)
+		result.statusCode = response.StatusCode
+		result.content = string(contents)
+		return result
 	}
-	return ""
+	return nil
 }
 
 func (connector *Connector) Post(address string, payload string) string {
