@@ -16,6 +16,9 @@ func GetOrder(connector *Connector.Connector, order_id int) *Order.Order {
 	var address string
 	address = fmt.Sprintf("/order/%d", order_id)
 	apiResult = connector.Get(address)
+	if apiResult == nil {
+		return nil
+	}
 	order = Order.NewOrder(apiResult.Content)
 	order = Order.NewOrder()
 	order.Parse(apiResult.Content)
