@@ -13,7 +13,9 @@ type Order struct {
 }
 
 func (order *Order) Parse(data string) {
-	xml.Unmarshal([]byte(data), order)
+	o := &Order{}
+	xml.Unmarshal([]byte(data), o)
+	order = o
 }
 
 func NewOrder(payload ...string) *Order {
