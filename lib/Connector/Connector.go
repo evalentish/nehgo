@@ -38,9 +38,10 @@ func (connector *Connector) Get(address string) *ConnectorResponse {
 			log.Fatal(err)
 		}
 		hdr := response.Header
-		var key, value string
-		for key, value = range hdr {
-			result.Headers[key] = value
+		for key, value := range hdr {
+			skey := string(key)
+			svalue := strings.Join(value, ",")
+			result.Headers[skey] = svalue
 		}
 		result.StatusCode = response.StatusCode
 		result.Content = string(contents)
@@ -66,9 +67,10 @@ func (connector *Connector) Put(address string, payload string) *ConnectorRespon
 			log.Fatal(err)
 		}
 		hdr := response.Header
-		var key, value string
-		for key, value = range hdr {
-			result.Headers[key] = value
+		for key, value := range hdr {
+			skey := string(key)
+			svalue := strings.Join(value, ",")
+			result.Headers[skey] = svalue
 		}
 		result.StatusCode = response.StatusCode
 		result.Content = string(contents)
