@@ -3,6 +3,7 @@ package Order
 import (
 	"go/types"
 	"encoding/xml"
+	"fmt"
 )
 
 type Order struct {
@@ -15,6 +16,8 @@ type Order struct {
 func (order *Order) Parse(data string) {
 	o := &Order{}
 	xml.Unmarshal([]byte(data), o)
+	fmt.Println(data)
+	fmt.Println(o)
 	order = o
 }
 
