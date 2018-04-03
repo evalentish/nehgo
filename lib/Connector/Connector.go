@@ -24,7 +24,11 @@ func (connector *Connector) Get(address string) *ConnectorResponse {
 	var url string
 	var result = new(ConnectorResponse)
 	result.Headers = make(map[string]string)
-	url = "https://" + connector.hostname + "/__API__" + address
+	if  strings.Index(address, "/__API__") > 0 {
+		url = "https://" + connector.hostname +  address
+	} else {
+		url = "https://" + connector.hostname + "/__API__" + address
+	}
 	client := &http.Client{}
 	request, err := http.NewRequest("GET", url, nil)
 	request.SetBasicAuth(connector.username, connector.password)

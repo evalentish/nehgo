@@ -11,7 +11,7 @@ func GetOrder(connector *Connector.Connector, order_id int) *Order.Order {
 	var apiResult *Connector.ConnectorResponse
 	var order *Order.Order
 	var address string
-	address = fmt.Sprintf("/order/%d", order_id)
+	address = fmt.Sprintf("/order/%d?view=long", order_id)
 	apiResult = connector.Get(address)
 	if apiResult == nil {
 		return nil
