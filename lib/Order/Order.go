@@ -1,7 +1,6 @@
 package Order
 
 import (
-	"go/types"
 	"encoding/xml"
 	"strings"
 	"bytes"
@@ -49,15 +48,33 @@ func (order *Order) AsXML() string {
 	return string(buffer)
 }
 
-type Orders struct {
-	List types.Array
+type OrderList struct {
+	XMLName xml.Name `xml:"OrderList"`
+	Orders []Order `xml:"Order"`
 }
 
-func (orders *Orders) Parse(data string) {
-
+func (orderlist *OrderList) Parse(data string) bool {
+	reader := bytes.NewReader([]byte(data))
+	decoder := xml.NewDecoder(reader)
+	decoder.CharsetReader = charset.NewReader
+	err := decoder.Decode(orderlist)
+	if err != nil {
+		return false
+	}
+	return true
 }
 
-func (orders *Orders) AsXML() string {
+func NewOrderList(payload ...string) *OrderList {
+	var orderlist *OrderList
+	orderlist = new(OrderList)
+	if len(payload) > 0 {
+		s := strings.Join(payload, " ")
+		orderlist.Parse(s)
+	}
+	return orderlist
+}
+
+func (orders *OrderList) AsXML() string {
 	var xml string
 	xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
 	return xml

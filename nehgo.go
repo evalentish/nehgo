@@ -24,11 +24,24 @@ func GetCustomer(connector *Connector.Connector, customer_id int) *Customer.Cust
 	var apiResult *Connector.ConnectorResponse
 	var customer *Customer.Customer
 	var address string
-	address = fmt.Sprintf("/customer/%d", customer_id)
+	address = fmt.Sprintf("/customer/%d?view=long", customer_id)
 	apiResult = connector.Get(address)
 	if apiResult == nil {
 		return nil
 	}
 	customer = Customer.NewCustomer(apiResult.Content)
 	return customer
+}
+
+func GetCustomerOrders(connector *Connector.Connector, customer_id int) *Order.OrderList {
+	var apiResult *Connector.ConnectorResponse
+	var orderlist *Order.OrderList
+	var address string
+	address = fmt.Sprintf("/customer/%d/orders?view=long", customer_id)
+	apiResult = connector.Get(address)
+	if apiResult == nil {
+		return nil
+	}
+	orderlist = Order.NewOrderList(apiResult.Content)
+	return orderlist
 }
