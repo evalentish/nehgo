@@ -2,9 +2,9 @@ package nehgo
 
 import (
 	"fmt"
-	"github.com/evalentish/nehgo/lib/Order"
-	"github.com/evalentish/nehgo/lib/Connector"
-	"github.com/evalentish/nehgo/lib/Customer"
+	"nehgo/lib/Order"
+	"nehgo/lib/Connector"
+	"nehgo/lib/Customer"
 )
 
 func GetOrder(connector *Connector.Connector, order_id int) *Order.Order {
