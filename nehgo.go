@@ -5,6 +5,7 @@ import (
 	"nehgo/lib/Order"
 	"nehgo/lib/Connector"
 	"nehgo/lib/Customer"
+	"strings"
 )
 
 func GetOrder(connector *Connector.Connector, order_id int) *Order.Order {
@@ -12,6 +13,22 @@ func GetOrder(connector *Connector.Connector, order_id int) *Order.Order {
 	var order *Order.Order
 	var address string
 	address = fmt.Sprintf("/order/%d?view=long", order_id)
+	apiResult = connector.Get(address)
+	if apiResult == nil {
+		return nil
+	}
+	order = Order.NewOrder(apiResult.Content)
+	return order
+}
+
+func GetOrderHREF(connector *Connector.Connector, address string) *Order.Order {
+	var apiResult *Connector.ConnectorResponse
+	var order *Order.Order
+
+	if strings.Index(address, "/__API__") < 0 {
+		address = "/__API__" + address
+	}
+	address += "?view=long"
 	apiResult = connector.Get(address)
 	if apiResult == nil {
 		return nil

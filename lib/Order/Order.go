@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"code.google.com/p/go-charset/charset"
 	_ "code.google.com/p/go-charset/data"
+	"time"
 )
 
 type Order struct {
@@ -13,8 +14,15 @@ type Order struct {
 	Order_id int `xml:"order_id,attr"`
 	OrderHREF string `xml:"href,attr"`
 	OrderNo string `xml:"OrderNo"`
-	CustomerNo int `xml:"Customer"`
+	Customer struct {
+		HREF string `xml:"href,attr"`
+		Value string `xml:",chardata"`
+	} `xml:"Customer"`
 	State string `xml:"State"`
+	CreatedTime string `xml:"CreatedTime"`
+	CreatedTimestamp time.Time
+	ChangedTime string `xml:"ChangedTime"`
+	ChangedTimestamp time.Time
 }
 
 func (order *Order) Parse(data string) bool {
@@ -25,6 +33,10 @@ func (order *Order) Parse(data string) bool {
 	if err != nil {
 		return false
 	}
+	// Fix dates
+	order.CreatedTimestamp, _ = time.Parse(time.RFC3339, order.CreatedTime)
+	order.ChangedTimestamp, _ = time.Parse(time.RFC3339, order.ChangedTime)
+
 	return true
 }
 
