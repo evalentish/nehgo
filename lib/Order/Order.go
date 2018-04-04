@@ -9,6 +9,26 @@ import (
 	"time"
 )
 
+type Item struct {
+	XMLName xml.Name `xml:"Item"`
+	HREF string `xml:"href,attr"`
+	LineNumber int `xml:"LineNumber"`
+	Variant struct {
+		HREF string `xml:"href,attr"`
+		IsNil bool `xml:"xsi:nil,attr"`
+	} `xml:"Variant"`
+	SKU string `xml:"SKU"`
+	Qty float32 `xml:"Qty"`
+	Price float32 `xml:"Price"`
+	Tax float32 `xml:"Tax"`
+}
+
+type OrderItems struct {
+	XMLName xml.Name `xml:"OrderItems"`
+	HREF string `xml:"href,attr"`
+	Items []Item `xml:"Item"`
+}
+
 type Order struct {
 	XMLName xml.Name `xml:"Order"`
 	Order_id int `xml:"order_id,attr"`
@@ -23,6 +43,7 @@ type Order struct {
 	CreatedTimestamp time.Time
 	ChangedTime string `xml:"ChangedTime"`
 	ChangedTimestamp time.Time
+	OrderItems OrderItems `xml:"OrderItems"`
 }
 
 func (order *Order) Parse(data string) bool {
@@ -86,9 +107,13 @@ func NewOrderList(payload ...string) *OrderList {
 	return orderlist
 }
 
-func (orders *OrderList) AsXML() string {
-	var xml string
-	xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
-	return xml
+func (orderlist *OrderList) AsXML() string {
+	var buffer []byte
+	var err error
+	buffer, err = xml.Marshal(orderlist)
+	if err != nil {
+		return ""
+	}
+	return string(buffer)
 }
 
